@@ -6,8 +6,9 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "$SERVICE_NAME:$BRANCH_NAME"
-                sh 'printenv'
+                echo "$SERVICE_NAME:$GIT_COMMIT"
+                sh 'printenv
+                sh "docker build -t $SERVICE_NAME:$GIT_COMMIT ."
             }
         }
         stage('Test') {
@@ -18,6 +19,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
+                sh "docker ps"
             }
         }
     }
