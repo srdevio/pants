@@ -1,5 +1,6 @@
 apiVersion: extensions/v1beta1
 kind: Service
+metadata:
   name: pants
 spec:
   selector:
@@ -11,6 +12,7 @@ spec:
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
+metadata:
   name: pants-deployment
   labels:
     app: pants
