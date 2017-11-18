@@ -7,7 +7,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "$SERVICE_NAME:$GIT_COMMIT"
-                sh 'printenv
+                sh 'printenv'
                 sh "docker build -t $SERVICE_NAME:$GIT_COMMIT ."
             }
         }
