@@ -24,7 +24,7 @@ pipeline {
                 sh "sed -i.bak 's/\${image_name}/$SERVICE_NAME/g' deployment.yml"
                 sh "cat deployment.yml"
                 sh 'kubectl config use-context pants'
-                sh 'kubectl apply --record=true -f deployment.yaml'
+                sh 'kubectl apply --record=true -f deployment.yml'
                 sh 'kubectl rollout-status deployment $SERVICE_NAME'
             }
         }
