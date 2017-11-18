@@ -1,4 +1,6 @@
 env.SERVICE_NAME = 'pants'
+env.REPO_NAME = 'gcr.io/sr-poc-message-delivery'
+env.FULL_IMAGE_NAME = '$REPO_NAME/$SERVICE_NAME:$GIT_COMMIT'
 
 pipeline {
     agent any
@@ -8,12 +10,12 @@ pipeline {
             steps {
                 echo "$SERVICE_NAME:$GIT_COMMIT"
                 sh 'printenv'
-                sh 'docker build -t $SERVICE_NAME:$GIT_COMMIT .'
+                sh 'docker build -t $FULL_IMAGE_NAME .'
             }
         }
         stage('Push') {
             steps {
-                sh "gcloud docker -- push $SERVICE_NAME:$GIT_COMMIT"
+                sh "gcloud docker -- push $FULL_IMAGE_NAME"
             }
         }
         stage('Deploy') {
