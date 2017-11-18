@@ -1,6 +1,8 @@
+env.SERVICE_NAME = 'pants'
+
 pipeline {
     agent any
-    env.SERVICE_NAME = 'pants'
+
     stages {
         stage('Build') {
             steps {
