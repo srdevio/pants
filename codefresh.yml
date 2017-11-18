@@ -6,7 +6,16 @@ steps:
     image_name: srdevio/pants
     tag: ${{CF_BRANCH}}
   push_to_registry:
-      title: Pushing to Docker Registry
-      type: push
-      candidate: '${{build_image}}'
-      tag: '${{CF_BRANCH}}'
+    title: Pushing to Docker Registry
+    type: push
+    candidate: ${{build_image}}
+    tag: ${{CF_BRANCH}}
+  deploy-to-kubernetes-pants:
+    title: deploying to cluster
+    type: deploy
+    kind: kubernetes
+    cluster:  pants
+    namespace: default
+    file_path: ./deployment.yml
+    candidate:
+      image: ${{build_image}}
