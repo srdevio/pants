@@ -11,11 +11,11 @@ steps:
     candidate: ${{build_image}}
     tag: ${{CF_BRANCH}}
     registry: cfcr
-  deploy-to-kubernetes-pants:
+  deploy_to-kubernetes_pants:
     title: deploying to cluster
     type: deploy
     kind: kubernetes
-    cluster:  pants
+    cluster:  pants@sr-poc-message-delivery
     namespace: default
     file_path: ./deployment.yml
     candidate:

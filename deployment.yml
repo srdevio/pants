@@ -1,5 +1,5 @@
 kind: Service
-apiVersion: extensions/v1beta1metadata:
+apiVersion: extensions/v1beta1metadata
   name: pants
 spec:
   selector:
@@ -10,7 +10,7 @@ spec:
     targetPort: 80
 ---
 kind: Deployment
-apiVersion: extensions/v1beta1metadata:
+apiVersion: extensions/v1beta1metadata
   name: pants-deployment
   labels:
     app: pants
