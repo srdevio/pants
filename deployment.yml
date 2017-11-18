@@ -28,6 +28,6 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: ${{build_image}}:${{CF_BRANCH}}
+        image: nginx:latest
         ports:
         - containerPort: 80
