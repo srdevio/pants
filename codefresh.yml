@@ -18,6 +18,6 @@ steps:
     cluster:  pants
     namespace: default
     file_path: ./deployment.yml
-    registry: cfcr
     candidate:
       image: ${{build_image}}
+      registry: cfcr
