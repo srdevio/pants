@@ -1,5 +1,5 @@
 kind: Service
-apiVersion: v1
+apiVersion: v2
 metadata:
   name: pants
 spec:
@@ -11,7 +11,7 @@ spec:
     targetPort: 80
 ---
 kind: Deployment
-apiVersion: v1
+apiVersion: v2
 metadata:
   name: pants-deployment
   labels:
