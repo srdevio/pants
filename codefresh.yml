@@ -3,11 +3,10 @@ steps:
   build_image:
     type: build
     description: Building the image...
-    image-name: srdevio/pants
-    tag: develop # ${{CF_BRANCH}}
+    image_name: srdevio/pants
+    tag: ${{CF_BRANCH}}
   push_to_registry:
       title: Pushing to Docker Registry
       type: push
       candidate: '${{build_image}}'
       tag: '${{CF_BRANCH}}'
-      registry: srdevio/pants
