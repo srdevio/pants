@@ -25,7 +25,7 @@ pipeline {
                 sh "cat deployment.yml"
                 sh 'kubectl config use-context pants'
                 sh 'kubectl apply --record=true -f deployment.yml'
-                sh 'kubectl rollout-status deployment $SERVICE_NAME'
+                sh 'kubectl rollout status deployment $SERVICE_NAME'
             }
         }
     }
