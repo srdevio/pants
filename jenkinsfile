@@ -1,10 +1,10 @@
 pipeline {
     agent any
-
+    env.SERVICE_NAME = 'pants'
     stages {
         stage('Build') {
             steps {
-                echo "$BRANCH_NAME"
+                echo "$SERVICE_NAME:$BRANCH_NAME"
                 sh 'printenv'
             }
         }
