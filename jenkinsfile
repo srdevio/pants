@@ -17,12 +17,11 @@ pipeline {
                 sh 'gcloud docker -- push $REPO_NAME/$SERVICE_NAME:$GIT_COMMIT'
             }
         }
-        stage('Deploy to Panda') {
+        stage('Deploy to Pants ENV') {
             steps {
                 echo 'Deploying....'
                 sh "sed -i.bak 's/\${build_number}/$GIT_COMMIT/g' deployment.yml"
                 sh "sed -i.bak 's/\${image_name}/$SERVICE_NAME/g' deployment.yml"
-                sh "cat deployment.yml"
                 sh 'kubectl config use-context pants'
                 sh 'kubectl apply --record=true -f deployment.yml'
                 sh 'kubectl rollout status deployment $SERVICE_NAME'
