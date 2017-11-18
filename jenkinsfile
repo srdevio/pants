@@ -11,9 +11,9 @@ pipeline {
                 sh 'docker build -t $SERVICE_NAME:$GIT_COMMIT .'
             }
         }
-        stage('Test') {
+        stage('Push') {
             steps {
-                echo 'Testing..'
+                sh "gcloud docker -- push $SERVICE_NAME:$GIT_COMMIT"
             }
         }
         stage('Deploy') {
