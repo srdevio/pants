@@ -20,7 +20,11 @@ pipeline {
         stage('Deploy to Panda') {
             steps {
                 echo 'Deploying....'
-                sh "docker images"
+                sh "sed -i.bak 's/\${build_number}/$COMMIT_ID/g' deployment.yml"
+                sh "cat deployment.yml"
+                sh 'kubectl config use-context panda'
+                sh 'kubectl apply --record=true -f deployment.yaml'
+                sh 'kubectl rollout-status deployment $SERVICE_NAME'
             }
         }
     }
