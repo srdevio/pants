@@ -9,15 +9,15 @@ pipeline {
             steps {
                 echo "$SERVICE_NAME:$GIT_COMMIT"
                 sh 'printenv'
-                sh 'docker build -t $$REPO_NAME/$SERVICE_NAME:$GIT_COMMIT .'
+                sh 'docker build -t $REPO_NAME/$SERVICE_NAME:$GIT_COMMIT .'
             }
         }
-        stage('Push') {
+        stage('Push Image') {
             steps {
-                sh "gcloud docker -- push $$REPO_NAME/$SERVICE_NAME:$GIT_COMMIT"
+                sh 'gcloud docker -- push $REPO_NAME/$SERVICE_NAME:$GIT_COMMIT'
             }
         }
-        stage('Deploy') {
+        stage('Deploy to Panda') {
             steps {
                 echo 'Deploying....'
                 sh "docker images"
