@@ -1,3 +1,2 @@
-FROM ubuntu:14.04
-CMD echo Hello Fatty
-
+FROM nginx:latest
+EXPOSE 80
