@@ -29,6 +29,6 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:latest
+        image: gcr.io/sr-poc-message-delivery/srdevio/${image_name}:${build_number}
         ports:
         - containerPort: 80
