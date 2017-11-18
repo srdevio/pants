@@ -21,9 +21,9 @@ pipeline {
             steps {
                 echo 'Deploying....'
                 sh "sed -i.bak 's/\${build_number}/$GIT_COMMIT/g' deployment.yml"
-                sh "sed -i.bak 's/\${service_name}/$SERVICE_NAME/g' deployment.yml"
+                sh "sed -i.bak 's/\${image_name}/$SERVICE_NAME/g' deployment.yml"
                 sh "cat deployment.yml"
-                sh 'kubectl config use-context panda'
+                sh 'kubectl config use-context pants'
                 sh 'kubectl apply --record=true -f deployment.yaml'
                 sh 'kubectl rollout-status deployment $SERVICE_NAME'
             }
