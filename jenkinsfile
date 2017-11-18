@@ -1,6 +1,6 @@
 env.SERVICE_NAME = 'pants'
 env.REPO_NAME = 'gcr.io/sr-poc-message-delivery'
-env.FULL_IMAGE_NAME = '$REPO_NAME/$SERVICE_NAME:$GIT_COMMIT'
+env.FULL_IMAGE_NAME = $REPO_NAME/$SERVICE_NAME:$GIT_COMMIT
 
 pipeline {
     agent any
