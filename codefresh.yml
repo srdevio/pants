@@ -10,6 +10,7 @@ steps:
     type: push
     candidate: ${{build_image}}
     tag: ${{CF_BRANCH}}
+    registry: cfcr
   deploy-to-kubernetes-pants:
     title: deploying to cluster
     type: deploy
@@ -17,5 +18,6 @@ steps:
     cluster:  pants
     namespace: default
     file_path: ./deployment.yml
+    registry: cfcr
     candidate:
       image: ${{build_image}}
