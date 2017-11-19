@@ -28,9 +28,7 @@ pipeline {
             }
         }
         stage('Deploy to Panda ENV') {
-            timeout(time: 5, unit: 'DAYS') {
-                input message: 'Approve deployment?'
-            }
+            input 'Are you sure?'
             steps {
                 echo 'Deploying to panda'
                 sh 'kubectl config use-context panda'
