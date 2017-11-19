@@ -28,7 +28,7 @@ pipeline {
             }
         }
         input 'Do you want to proceed to Panda?'
-        stage('Deploy to Pants ENV') {
+        stage('Deploy to Panda ENV') {
             steps {
                 echo 'Deploying to panda'
                 sh 'kubectl config use-context panda'
