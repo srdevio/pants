@@ -20,7 +20,7 @@ pipeline {
         stage('Copy Artifacts') {
             steps {
                 sh 'ls'
-                sh 'gsutil cp deployment.yml gs://sr-deployment-artifacts/$SERVICE_NAME/$GIT_COMMTI/'
+                sh 'gsutil cp deployment.yml Dockerfile gs://sr-deployment-artifacts/$SERVICE_NAME/$GIT_COMMTI/'
                 sh 'gsutil ls gs://sr-deployment-artifacts/$SERVICE_NAME/$GIT_COMMTI/'
             }
         }
