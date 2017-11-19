@@ -17,6 +17,13 @@ pipeline {
                 sh 'gcloud docker -- push $REPO_NAME/$SERVICE_NAME:$GIT_COMMIT'
             }
         }
+        stage('Copy Artifacts') {
+            steps {
+                sh 'ls'
+                sh 'gsutil cp deployment.yml gs://sr-deployment-artifact/$SERVICE_NAME/$GIT_COMMTI/'
+                sh 'gsutil ls gs://sr-deployment-artifact/$SERVICE_NAME/$GIT_COMMTI/'
+            }
+        }
         stage('Deploy to Pants ENV') {
             steps {
                 echo 'Deploying to pants'
