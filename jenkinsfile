@@ -28,8 +28,8 @@ pipeline {
             }
         }
         stage('Deploy to Panda ENV') {
-            input 'Are you sure?'
             steps {
+                input 'Are you sure?'
                 echo 'Deploying to panda'
                 sh 'kubectl config use-context panda'
                 sh 'kubectl apply --record=true -f deployment.yml'
