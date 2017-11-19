@@ -27,8 +27,10 @@ pipeline {
                 sh 'kubectl rollout status deployment $SERVICE_NAME'
             }
         }
-        input 'Do you want to proceed to Panda?'
         stage('Deploy to Panda ENV') {
+            timeout(time: 5, unit: 'DAYS') {
+                input message: 'Approve deployment?'
+            }
             steps {
                 echo 'Deploying to panda'
                 sh 'kubectl config use-context panda'
