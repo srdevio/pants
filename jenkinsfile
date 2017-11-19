@@ -7,11 +7,9 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-              node {
                 echo "$SERVICE_NAME:$GIT_COMMIT"
                 sh 'printenv'
                 sh 'docker build -t $REPO_NAME/$SERVICE_NAME:$GIT_COMMIT .'
-              }
             }
         }
         stage('Push Image') {
