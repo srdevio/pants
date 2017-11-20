@@ -1,0 +1,23 @@
+version: '1.0'
+steps:
+  build_image:
+    type: build
+    description: Building the image...
+    image_name: srdevio/pants
+    tag: ${{CF_BRANCH}}
+  push_to_registry:
+    title: Pushing to Docker Registry
+    type: push
+    candidate: ${{build_image}}
+    tag: ${{CF_BRANCH}}
+    registry: cfcr
+  deploy_to-kubernetes_pants:
+    title: deploying to cluster
+    type: deploy
+    kind: kubernetes
+    cluster:  pants@sr-poc-message-delivery
+    namespace: default
+    file_path: ./deployment.yml
+    candidate:
+      image: ${{build_image}}
+      registry: cfcr
