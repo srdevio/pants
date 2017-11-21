@@ -1,9 +1,13 @@
+// This var controls the deployment and service name in k8s
 env.SERVICE_NAME = 'pants'
+
+// This is the project the private docker repo resides in in GCE.
 env.REPO_NAME = 'gcr.io/sr-poc-message-delivery'
 
 pipeline {
     agent any
 
+    // Build the docker image using the Jenkins agent
     stages {
         stage('Build') {
             steps {
@@ -12,13 +16,16 @@ pipeline {
                 sh 'docker build -t $REPO_NAME/$SERVICE_NAME:$GIT_COMMIT .'
             }
         }
+        // These stages handle the artifacts from the docker build etc.
         stage('Artifacts') {
           parallel {
+            // Push to private docker repository
             stage('Push Image') {
                 steps {
                     sh 'gcloud docker -- push $REPO_NAME/$SERVICE_NAME:$GIT_COMMIT'
                 }
             }
+            // Copy deployment file(s) to a private storage bucket
             stage('Copy deployment files') {
                 steps {
                     sh 'ls'
@@ -28,6 +35,7 @@ pipeline {
             }
           }
         }
+        // Deploy the new build to the PANTS environment.
         stage('Deploy to Pants ENV') {
             steps {
                 echo 'Deploying to pants'
@@ -38,9 +46,10 @@ pipeline {
                 sh 'kubectl rollout status deployment $SERVICE_NAME'
             }
         }
+        // Manually deploy the build to the PANDA ENV. Will wait X time.
         stage('Deploy to Panda ENV') {
             steps {
-                timeout(time: 5, unit: 'DAYS') {
+                timeout(time: 1, unit: 'DAYS') {
                   input 'Are you sure?'
                 }
                 echo 'Deploying to panda'
