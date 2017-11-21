@@ -5,8 +5,7 @@ env.SERVICE_NAME = 'pants'
 env.REPO_NAME = 'gcr.io/sr-poc-message-delivery'
 
 pipeline {
-//    agent any
-    agent kubernetes
+    agent any
 
     // Build the docker image using the Jenkins agent
     stages {
