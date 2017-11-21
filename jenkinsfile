@@ -12,17 +12,21 @@ pipeline {
                 sh 'docker build -t $REPO_NAME/$SERVICE_NAME:$GIT_COMMIT .'
             }
         }
-        stage('Push Image') {
-            steps {
-                sh 'gcloud docker -- push $REPO_NAME/$SERVICE_NAME:$GIT_COMMIT'
+        stage('Artifacts') {
+          parallel {
+            stage('Push Image') {
+                steps {
+                    sh 'gcloud docker -- push $REPO_NAME/$SERVICE_NAME:$GIT_COMMIT'
+                }
             }
-        }
-        stage('Copy Artifacts') {
-            steps {
-                sh 'ls'
-                sh 'gsutil cp deployment.yml Dockerfile gs://sr-deployment-artifacts/$SERVICE_NAME/$GIT_COMMIT/'
-                sh 'gsutil ls gs://sr-deployment-artifacts/$SERVICE_NAME/$GIT_COMMIT/'
+            stage('Copy deployment files') {
+                steps {
+                    sh 'ls'
+                    sh 'gsutil cp deployment.yml Dockerfile gs://sr-deployment-artifacts/$SERVICE_NAME/$GIT_COMMIT/'
+                    sh 'gsutil ls gs://sr-deployment-artifacts/$SERVICE_NAME/$GIT_COMMIT/'
+                }
             }
+          }
         }
         stage('Deploy to Pants ENV') {
             steps {
