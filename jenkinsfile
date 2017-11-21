@@ -46,6 +46,11 @@ pipeline {
                 sh 'kubectl rollout status deployment $SERVICE_NAME'
             }
         }
+        stage('Test') {
+            steps {
+                sh './tests/test.sh'
+            }
+        }
         // Manually deploy the build to the PANDA ENV. Will wait X time.
         stage('Deploy to Panda ENV') {
             steps {
@@ -57,6 +62,11 @@ pipeline {
                 sh 'kubectl apply --record=true -f deployment.yml'
                 sh 'kubectl rollout status deployment $SERVICE_NAME'
             }
+        }
+    }
+    post {
+        always {
+            junit '*.xml'
         }
     }
 }
