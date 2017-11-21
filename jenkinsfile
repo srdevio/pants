@@ -27,7 +27,10 @@ pipeline {
             }
             // Copy deployment file(s) to a private storage bucket
             stage('Copy deployment files') {
-                steps {
+                steps
+                    timeout(time: 1, unit: 'DAYS') {
+                      input 'Are you sure you want to copy this stuff?'
+                    }
                     sh 'ls'
                     sh 'gsutil cp deployment.yml Dockerfile gs://sr-deployment-artifacts/$SERVICE_NAME/$GIT_COMMIT/'
                     sh 'gsutil ls gs://sr-deployment-artifacts/$SERVICE_NAME/$GIT_COMMIT/'
