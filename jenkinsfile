@@ -49,9 +49,6 @@ pipeline {
         stage('Test') {
             steps {
                 sh './tests/test.sh'
-                sh 'ls -l tests/'
-                sh 'pwd'
-                sh 'cat tests/*.xml'
             }
         }
         // Manually deploy the build to the PANDA ENV. Will wait X time.
