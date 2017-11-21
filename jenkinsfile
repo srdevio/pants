@@ -66,6 +66,7 @@ pipeline {
     }
     post {
         always {
+            archive 'tests/*.xml'
             junit 'tests/*.xml'
         }
     }
