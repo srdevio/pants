@@ -48,7 +48,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'ls tests/'
+                sh './tests/test.sh'
             }
         }
         // Manually deploy the build to the PANDA ENV. Will wait X time.
