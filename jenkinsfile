@@ -1,6 +1,6 @@
 #!groovy
 env.SERVICE_NAME = 'pants'
-@Library('pipeline-libs') _
+@Library('pipeline-libs@master') _
 
 // This var controls the deployment and service name in k8s
 env.SERVICE_NAME = 'pants'
