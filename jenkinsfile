@@ -50,13 +50,10 @@ pipeline {
         // Manually deploy the build to the PANDA ENV. Will wait X time.
         stage('Deploy to Panda ENV') {
             steps {
-                timeout(time: 1, unit: 'DAYS') {
+                timeout(time: 1, unit: 'HOUR') {
                   input 'Are you sure?'
                 }
-                echo 'Deploying to panda'
-                sh 'kubectl config use-context panda'
-                sh 'kubectl apply --record=true -f deployment.yml'
-                sh 'kubectl rollout status deployment $SERVICE_NAME'
+                deployGen this, 'panda'
             }
         }
     }
