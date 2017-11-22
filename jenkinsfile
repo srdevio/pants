@@ -50,7 +50,7 @@ pipeline {
         // Manually deploy the build to the PANDA ENV. Will wait X time.
         stage('Deploy to Panda ENV') {
             steps {
-                timeout(time: 1, unit: 'HOUR') {
+                timeout(time: 1, unit: 'DAYS') {
                   input 'Are you sure?'
                 }
                 deployGen this, 'panda'
