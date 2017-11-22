@@ -39,12 +39,7 @@ pipeline {
         // Deploy the new build to the PANTS environment.
         stage('Deploy to Pants ENV') {
             steps {
-                echo 'Deploying to pants'
-                sh "sed -i.bak 's/\${build_number}/$GIT_COMMIT/g' deployment.yml"
-                sh "sed -i.bak 's/\${image_name}/$SERVICE_NAME/g' deployment.yml"
-                sh 'kubectl config use-context pants'
-                sh 'kubectl apply --record=true -f deployment.yml'
-                sh 'kubectl rollout status deployment $SERVICE_NAME'
+                deployGen this, 'pants'
             }
         }
         stage('Test') {
