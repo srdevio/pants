@@ -25,7 +25,7 @@ pipeline {
             // Push to private docker repository
             stage('Push Image') {
                 steps {
-                    sh 'gcloud docker -- push $REPO_NAME/$SERVICE_NAME:$GIT_COMMIT'
+                    dockerPush this
                 }
             }
             // Copy deployment file(s) to a private storage bucket
