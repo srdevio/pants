@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                dockerBuild '$REPO_NAME/$SERVICE_NAME:$GIT_COMMIT'
+                dockerBuild '${REPO_NAME}/${SERVICE_NAME}:${GIT_COMMIT}'
             }
         }
         // These stages handle the artifacts from the docker build etc.
