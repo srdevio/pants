@@ -1,11 +1,12 @@
 #!groovy
-@Library('pipeline-libs')
-
 // This var controls the deployment and service name in k8s
 env.SERVICE_NAME = 'pants'
 
 // This is the project the private docker repo resides in in GCE.
 env.REPO_NAME = 'gcr.io/sr-poc-message-delivery'
+
+//Shared Libs
+@Library('pipeline-libs')
 
 pipeline {
     agent any
