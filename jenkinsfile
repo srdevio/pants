@@ -51,6 +51,12 @@ pipeline {
           steps {
               sh './tests/test.sh'
           }
+          post {
+            always {
+                archive 'tests/*.xml'
+                junit 'tests/*.xml'
+            }
+          }
         }
         stage('Manual Input') {
           agent none
@@ -66,13 +72,6 @@ pipeline {
           steps {
               deployGen this, 'panda'
           }
-        }
-    }
-    post {
-      agent any
-        always {
-            archive 'tests/*.xml'
-            junit 'tests/*.xml'
         }
     }
 }
