@@ -28,6 +28,6 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: gcr.io/sr-poc-message-delivery/${image_name}:${build_number}
+        image: gcr.io/sr-poc-message-delivery/${image_name}/${image_name}:${build_number}
         ports:
         - containerPort: 80
