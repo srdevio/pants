@@ -9,52 +9,63 @@ env.SERVICE_NAME = 'pants'
 env.REPO_NAME = 'gcr.io/sr-poc-message-delivery'
 
 pipeline {
-    agent any
+    agent none
 
     // Build the docker image using the Jenkins agent
     stages {
         stage('Build') {
-            steps {
-              // From shared libs. Assumes SERVICE_NAME and REPO_NAME exist.
-              dockerBuild this
-            }
+          agent any
+          steps {
+            // From shared libs. Assumes SERVICE_NAME and REPO_NAME exist.
+            dockerBuild this
+          }
         }
         // These stages handle the artifacts from the docker build etc.
         stage('Artifacts') {
+          agent any
           parallel {
             // Push to private docker repository
             stage('Push Image') {
-                steps {
-                    dockerPush this
-                }
+              agent any
+              steps {
+                  dockerPush this
+              }
             }
             // Copy deployment file(s) to a private storage bucket
             stage('Copy deployment files') {
-                steps {
-                    pushArtifactsGcloud this
-                }
+              agent any
+              steps {
+                  pushArtifactsGcloud this
+              }
             }
           }
         }
         // Deploy the new build to the PANTS environment.
         stage('Deploy to Pants ENV') {
-            steps {
-                deployGen this, 'pants'
-            }
+          agent any
+          steps {
+              deployGen this, 'pants'
+          }
         }
         stage('Test') {
-            steps {
-                sh './tests/test.sh'
-            }
+          agent any
+          steps {
+              sh './tests/test.sh'
+          }
         }
+        stage('Manual Input')
+          agent none
+          steps {
+              timeout(time: 1, unit: 'DAYS') {
+                input 'Are you sure?'
+              }
+          }
         // Manually deploy the build to the PANDA ENV. Will wait X time.
         stage('Deploy to Panda ENV') {
-            steps {
-                timeout(time: 1, unit: 'DAYS') {
-                  input 'Are you sure?'
-                }
-                deployGen this, 'panda'
-            }
+          agent any
+          steps {
+              deployGen this, 'panda'
+          }
         }
     }
     post {
