@@ -22,7 +22,6 @@ pipeline {
         }
         // These stages handle the artifacts from the docker build etc.
         stage('Artifacts') {
-          agent any
           parallel {
             // Push to private docker repository
             stage('Push Image') {
@@ -53,13 +52,14 @@ pipeline {
               sh './tests/test.sh'
           }
         }
-        stage('Manual Input')
+        stage('Manual Input') {
           agent none
           steps {
               timeout(time: 1, unit: 'DAYS') {
                 input 'Are you sure?'
               }
           }
+        }
         // Manually deploy the build to the PANDA ENV. Will wait X time.
         stage('Deploy to Panda ENV') {
           agent any
